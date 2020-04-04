@@ -5,7 +5,7 @@ Required:
 
 • RAK4600 Arduino Bootloader see https://github.com/RAKWireless/RAK4600_Arduino
 
-• SeeedStudio BME280 Library
+• SeeedStudio BME280 Library (or any other BME280 library).
 
 • RadioLib https://github.com/jgromes/RadioLib
 
