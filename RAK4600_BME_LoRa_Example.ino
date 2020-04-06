@@ -1,14 +1,8 @@
-#include "Seeed_BME280.h"
-#include <Wire.h>
 #include <RadioLib.h>
+#include <Wire.h>
+#include "Seeed_BME280.h"
 
-// SX1278 has the following connections:
-// NSS pin:   10
-// DIO0 pin:  2
-// RESET pin: 9
-// DIO1 pin:  3
 SX1276 lora = new Module(4, 28, 3, 31);
-
 BME280 bme280;
 
 void setup() {
@@ -18,15 +12,6 @@ void setup() {
   while (Serial.available()) char c = Serial.read();
   delay(1000);
   Serial.print(F("[SX1276] Initializing ... "));
-  // carrier frequency:           434.0 MHz
-  // bandwidth:                   125.0 kHz
-  // spreading factor:            9
-  // coding rate:                 7
-  // sync word:                   0x12
-  // output power:                17 dBm
-  // current limit:               100 mA
-  // preamble length:             8 symbols
-  // amplifier gain:              0 (automatic gain control)
   int state = lora.begin(869.525, 125.0, 9, 5, SX127X_REG_SYNC_WORD, 20, 80, 8, 0);
   // int16_t SX1276::begin(float freq, float bw, uint8_t sf, uint8_t cr, uint8_t syncWord, int8_t power, uint8_t currentLimit, uint16_t preambleLength, uint8_t gain) {
   if (state == ERR_NONE) {
