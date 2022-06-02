@@ -2,14 +2,16 @@
 #include <Wire.h>
 #include "Seeed_BME280.h"
 
-SX1276 lora = new Module(4, 28, 3, 31);
+// Module(RADIOLIB_PIN_TYPE cs, RADIOLIB_PIN_TYPE irq, RADIOLIB_PIN_TYPE rst, RADIOLIB_PIN_TYPE gpio);
+SX1276 lora = new Module(4, 28, 3, 31); // rak4600
+//SX1276 lora = new Module(SS, RFM_DIO0, RFM_RST, RFM_DIO1); // rak4260 -- not working
+
 BME280 bme280;
 
 void setup() {
-  Wire.begin();
   Serial.begin(115200);
-  while (!Serial);
-  while (Serial.available()) char c = Serial.read();
+  delay(1000);
+  Serial.println(F("Starting ... "));
   delay(1000);
   Serial.print(F("[SX1276] Initializing ... "));
   int state = lora.begin(869.525, 125.0, 9, 5, SX127X_REG_SYNC_WORD, 20, 80, 8, 0);
@@ -21,6 +23,7 @@ void setup() {
     Serial.println(state);
     while (true);
   }
+  Wire.begin();
   Serial.println("BME280 test");
   if (!bme280.init()) {
     Serial.println("Device error!");
